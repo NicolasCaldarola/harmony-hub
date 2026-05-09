@@ -15,13 +15,20 @@ const ItemDetail = ({ id, name, img, category, description, price, stock }) => {
 
     const defaultImg = 'https://placehold.co/600x400/1a1a1a/8b7355?text=Instrumento';
 
+    const finalImgPath = img 
+        ? (img.startsWith('/') ? img : `/${img}`) 
+        : defaultImg;
+
     return (
         <article className="ItemDetail-container">
             <picture className="ItemDetail-img">
                 <img 
-                    src={img || defaultImg} 
+                    src={finalImgPath} 
                     alt={name} 
-                    onError={(e) => e.target.src = defaultImg}
+                    onError={(e) => {
+                        e.target.src = defaultImg;
+                        e.target.onerror = null;
+                    }}
                 />
             </picture>
             
